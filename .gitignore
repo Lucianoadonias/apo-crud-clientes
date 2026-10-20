@@ -6,6 +6,17 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Arquivos com variáveis de ambiente e segredos
+.env
+.env.*
+
+# Arquivos gerados pelo sistema operacional
+.DS_Store
+Thumbs.db
+
+# Permite manter um modelo de configuração sem segredos
+!.env.example
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -147,3 +158,4 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
