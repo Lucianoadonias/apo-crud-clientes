@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro de Clientes | APO</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <h1>Gerenciamento de Clientes</h1>
+            <p>Cadastre e gerencie os clientes da empresa.</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="card" aria-labelledby="form-title">
+            <h2 id="form-title">Cadastrar cliente</h2>
+
+            <form id="client-form">
+                <div class="form-field">
+                    <label for="client-name">Nome completo</label>
+                    <input
+                        type="text"
+                        id="client-name"
+                        name="name"
+                        placeholder="Digite o nome completo"
+                        autocomplete="name"
+                        minlength="2"
+                        maxlength="100"
+                        required
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="client-email">E-mail</label>
+                    <input
+                        type="email"
+                        id="client-email"
+                        name="email"
+                        placeholder="cliente@exemplo.com"
+                        autocomplete="email"
+                        maxlength="150"
+                        required
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="client-phone">Telefone</label>
+                    <input
+                        type="tel"
+                        id="client-phone"
+                        name="phone"
+                        placeholder="(45) 99999-9999"
+                        autocomplete="tel"
+                        inputmode="tel"
+                    >
+                </div>
+
+                <p id="form-feedback" role="status" aria-live="polite"></p>
+
+                <button type="submit">Cadastrar cliente</button>
+                <button type="reset">Limpar formulário</button>
+            </form>
+        </section>
+
+        <section class="card" aria-labelledby="list-title">
+            <h2 id="list-title">Clientes cadastrados</h2>
+
+            <p id="list-feedback" role="status" aria-live="polite">
+                Os clientes cadastrados aparecerão nesta lista.
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+                    <caption>Lista de clientes</caption>
+
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="clients-list">
+                        <!-- O JavaScript adicionará as linhas nesta área. -->
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="empty-state">Nenhum cliente cadastrado.</p>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>APO — Desenvolvimento Front-end / Back-end</p>
+        </div>
+    </footer>
+
+</body>
+</html>
