@@ -1,0 +1,225 @@
+:root {
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-text: #172033;
+    --color-muted: #64748b;
+    --color-background: #f1f5f9;
+    --color-surface: #ffffff;
+    --color-border: #dbe3ee;
+    --radius-card: 16px;
+    --shadow-card: 0 10px 30px rgba(15,23,42,0.08);
+}
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+.container {
+    width: min(1120px, calc(100% - 2rem));
+    margin-inline: auto;
+}
+
+.site-header {
+    padding: 2rem 0;
+    color: #ffffff;
+    background-color: #0f172a;
+}
+
+.site-header h1 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    line-height: 1.2;
+}
+.site-header p {
+    margin: 0;
+    color: #cbd5e1;
+}
+
+main.container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+    gap: 1.5rem;
+    align-content: start;
+    padding-block: 2rem;
+}
+
+.card {
+    min-width: 0;
+    padding: 1.5rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+}
+
+.card h2 {
+    margin: 0 0 1.25rem;
+    font-size: 1.25rem;
+}
+
+.form-field {
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+}
+
+.form-field label {
+    font-weight: 600;
+}
+
+.form-field input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.7rem 0.8rem;
+    font: inherit;
+    color: var(--color-text);
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-field input:focus-visible {
+    outline: 2px solid transparent;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+button {
+    min-height: 44px;
+    padding: 0.7rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button[type="submit"] {
+    color: #ffffff;
+    background-color: var(--color-primary);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-primary-hover);
+}
+
+button[type="reset"] {
+    color: var(--color-text);
+    background-color: #e2e8f0;
+}
+
+button[type="reset"]:hover {
+    background-color: #cbd5e1;
+}
+
+#form-feedback,
+#list-feedback {
+    margin: 0.75rem 0;
+    color: var(--color-muted);
+}
+
+#form-feedback:empty,
+#list-feedback:empty {
+    display: none;
+}
+
+#empty-state {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    color: var(--color-muted);
+    background-color: #f8fafc;
+    border-radius: 8px;
+}
+
+.table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+
+    /* Evita que as colunas fiquem excessivamente estreitas. */
+    min-width: 540px;
+
+    border-collapse: collapse;
+}
+
+caption {
+    padding: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+th {
+    color: #334155;
+    background-color: #f8fafc;
+    font-size: 0.9rem;
+}
+
+tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.site-footer {
+    margin-top: auto;
+    padding: 1.25rem 0;
+
+    color: var(--color-muted);
+    background-color: #ffffff;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.9rem;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+@media (max-width: 760px) {
+    main.container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+        padding-block: 1.25rem;
+    }
+
+    .site-header {
+        padding: 1.5rem 0;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    #client-form button {
+        width: 100%;
+    }
+
+    #client-form button + button {
+        margin-top: 0.5rem;
+    }
+}
