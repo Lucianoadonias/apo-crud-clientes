@@ -153,7 +153,6 @@ button[type="reset"]:hover {
 table {
     width: 100%;
 
-    /* Evita que as colunas fiquem excessivamente estreitas. */
     min-width: 540px;
 
     border-collapse: collapse;
@@ -222,4 +221,33 @@ tbody tr:last-child td {
     #client-form button + button {
         margin-top: 0.5rem;
     }
+}
+
+.action-button {
+    min-height: 36px;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.action-button--edit {
+    color: #1e40af;
+    background-color: #dbeafe;
+}
+
+.action-button--edit:hover {
+    background-color: #bfdbfe;
+}
+
+.action-button--delete {
+    color: #991b1b;
+    background-color: #fee2e2;
+}
+
+.action-button--delete:hover {
+    background-color: #fecaca;
+}
+
+.action-button + .action-button {
+    margin-left: 0.5rem;
 }
