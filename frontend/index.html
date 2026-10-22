@@ -24,7 +24,7 @@
         <section class="card" aria-labelledby="form-title">
             <h2 id="form-title">Cadastrar cliente</h2>
 
-            <form id="client-form">
+            <form id="client-form" novalidate>
                 <div class="form-field">
                     <label for="client-name">Nome completo</label>
                     <input
@@ -74,9 +74,7 @@
         <section class="card" aria-labelledby="list-title">
             <h2 id="list-title">Clientes cadastrados</h2>
 
-            <p id="list-feedback" role="status" aria-live="polite">
-                Os clientes cadastrados aparecerão nesta lista.
-            </p>
+            <p id="list-feedback" role="status" aria-live="polite"></p>
 
             <div class="table-wrapper">
                 <table>
