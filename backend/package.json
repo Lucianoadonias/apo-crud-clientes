@@ -1,0 +1,16 @@
+{
+  "name": "apo-crud-clientes-backend",
+  "version": "1.0.0",
+  "description": "API REST de gerenciamento de clientes da APO",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
