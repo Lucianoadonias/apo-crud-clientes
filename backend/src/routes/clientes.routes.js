@@ -1,4 +1,3 @@
-
 "use strict";
 
 const express = require("express");
@@ -9,5 +8,7 @@ const router = express.Router();
 router.get("/", clientesController.listarClientes);
 
 router.get("/:id", clientesController.buscarClientePorId);
+
+router.post("/", clientesController.cadastrarCliente);
 
 module.exports = router;
