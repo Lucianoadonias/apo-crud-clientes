@@ -11,4 +11,6 @@ router.get("/:id", clientesController.buscarClientePorId);
 
 router.post("/", clientesController.cadastrarCliente);
 
+router.put("/:id", clientesController.atualizarCliente);
+
 module.exports = router;

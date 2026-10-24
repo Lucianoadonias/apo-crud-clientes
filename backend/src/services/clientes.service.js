@@ -50,8 +50,30 @@ function cadastrar(dados) {
     return novoCliente;
 }
 
+function atualizar(id, dados) {
+    const indice = clientes.findIndex(function (cliente) {
+        return cliente.id === id;
+    });
+
+    if (indice === -1) {
+        return null;
+    }
+
+    const clienteAtualizado = {
+        id: id,
+        name: dados.name,
+        email: dados.email,
+        phone: dados.phone,
+    };
+
+    clientes[indice] = clienteAtualizado;
+
+    return clienteAtualizado;
+}
+
 module.exports = {
     listarTodos,
     buscarPorId,
     cadastrar,
+    atualizar,
 };
