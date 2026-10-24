@@ -2,12 +2,15 @@
 "use strict";
 
 const express = require("express");
+const clientesRoutes = require("./routes/clientes.routes");
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+app.use("/clientes", clientesRoutes);
 
 app.get("/health", function (req, res) {
     res.status(200).json({
