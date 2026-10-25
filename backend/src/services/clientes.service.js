@@ -71,9 +71,24 @@ function atualizar(id, dados) {
     return clienteAtualizado;
 }
 
+function excluir(id) {
+    const indice = clientes.findIndex(function (cliente) {
+        return cliente.id === id;
+    });
+
+    if (indice === -1) {
+        return null;
+    }
+
+    const [clienteExcluido] = clientes.splice(indice, 1);
+
+    return clienteExcluido;
+}
+
 module.exports = {
     listarTodos,
     buscarPorId,
     cadastrar,
     atualizar,
+    excluir,
 };

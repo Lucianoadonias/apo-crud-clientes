@@ -1,4 +1,3 @@
-
 "use strict";
 
 const express = require("express");
@@ -15,7 +14,7 @@ app.use("/clientes", clientesRoutes);
 app.get("/health", function (req, res) {
     res.status(200).json({
         status: "ok",
-        message: "API de clientes funcionando"
+        message: "API de clientes funcionando",
     });
 });
 
