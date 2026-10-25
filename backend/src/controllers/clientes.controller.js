@@ -118,9 +118,33 @@ function atualizarCliente(req, res) {
     return res.status(200).json(clienteAtualizado);
 }
 
+function excluirCliente(req, res) {
+    const id = Number(req.params.id);
+
+    if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({
+            error: "O ID deve ser um inteiro positivo.",
+        });
+    }
+
+    const clienteExcluido = clientesService.excluir(id);
+
+    if (!clienteExcluido) {
+        return res.status(404).json({
+            error: "Cliente não encontrado.",
+        });
+    }
+
+    return res.status(200).json({
+        message: "Cliente excluído com sucesso.",
+        cliente: clienteExcluido,
+    });
+}
+
 module.exports = {
     listarClientes,
     buscarClientePorId,
     cadastrarCliente,
     atualizarCliente,
+    excluirCliente,
 };

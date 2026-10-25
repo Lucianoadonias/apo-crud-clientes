@@ -13,4 +13,6 @@ router.post("/", clientesController.cadastrarCliente);
 
 router.put("/:id", clientesController.atualizarCliente);
 
+router.delete("/:id", clientesController.excluirCliente);
+
 module.exports = router;
