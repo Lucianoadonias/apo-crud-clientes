@@ -7,7 +7,7 @@
 **Tecnologias:** Node.js e Express.js  
 **Ambiente de teste:** Execução local no Windows, utilizando PowerShell  
 **Ferramenta de teste:** PowerShell com `Invoke-RestMethod`  
-**Status da validação:** Em andamento
+**Status da validação:** Concluída — 13 casos de teste aprovados.
 
 ## 2. Objetivo
 
@@ -23,21 +23,21 @@ Os resultados observados deverão ser comparados aos resultados esperados antes 
 
 ## 4. Casos de teste
 
-| ID  | Operação             | Cenário                       | Resultado esperado            | Resultado observado                                              | Situação      |
-| --- | -------------------- | ----------------------------- | ----------------------------- | ---------------------------------------------------------------- | ------------- | ------------------------------- | -------- |
-| T01 | GET /health          | Verificar servidor            | HTTP 200                      | HTTP 200; JSON com status: ok.                                   | Aprovado      |
-| T02 | GET /clientes        | Listar clientes               | HTTP 200 e lista JSON         | Retornou 3 clientes simulados                                    | Aprovado      |
-| T03 | GET /clientes/:id    | Consultar ID existente        | HTTP 200 e objeto JSON        | Retornou o cliente de ID 2 (Carlos Lima)                         | Aprovado      |
-| T04 | GET /clientes/99     | Consultar ID inexistente      | HTTP 404                      | HTTP 404; mensagem Cliente não encontrado.                       | Aprovado      |
-| T05 | GET /clientes/abc    | ID inválido                   | HTTP 400                      | HTTP 400; mensagem indicando que o ID deve ser inteiro positivo. | Aprovado      |
-| T06 | POST /clientes       | Dados válidos                 | HTTP 201 e cliente criado     | HTTP 201; cliente criado com ID 4 e dados retornados em JSON.    | Aprovado      |
-| T07 | POST /clientes       | Nome ou e-mail vazio          | HTTP 400                      | HTTP 400; campos obrigatórios rejeitados                         | Aprovado      |
-| T08 | POST /clientes       | E-mail inválido               | HTTP 400                      | HTTP 400; formato de e-mail rejeitado                            | Aprovado      |
-| T09 | PUT /clientes/:id    | Atualizar cliente existente   | HTTP 200 e cliente atualizado | HTTP 200; cliente de teste atualizado com os novos dados.        | Aprovado      |
-| T10 | PUT /clientes/99     | Atualizar cliente inexistente | HTTP 404                      | HTTP 404; cliente inexistente não foi encontrado.                | Aprovado      |
-| T11 | DELETE /clientes/:id | Excluir cliente existente     | HTTP 200 e confirmação        | HTTP 200; exclusão confirmada e objeto removido retornado.       | Aprovado      |
-| T12 | GET /clientes/:id    | Consultar cliente excluído    | HTTP 404                      | HTTP 404; consulta posterior não encontrou o cliente excluído.   | Não executado |
-| T13 | DELETE /clientes/abc | Excluir com ID inválido       | HTTP 400                      | Excluir com ID inválido                                          | HTTP 400      | HTTP 400; ID inválido rejeitado | Aprovado |
+| ID  | Operação             | Cenário                       | Resultado esperado            | Resultado observado                                                                     | Situação |
+| --- | -------------------- | ----------------------------- | ----------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| T01 | GET /health          | Verificar servidor            | HTTP 200                      | HTTP 200; JSON com status: ok.                                                          | Aprovado |
+| T02 | GET /clientes        | Listar clientes               | HTTP 200 e lista JSON         | Retornou 3 clientes simulados                                                           | Aprovado |
+| T03 | GET /clientes/:id    | Consultar ID existente        | HTTP 200 e objeto JSON        | Retornou o cliente de ID 2 (Carlos Lima)                                                | Aprovado |
+| T04 | GET /clientes/99     | Consultar ID inexistente      | HTTP 404                      | HTTP 404; mensagem Cliente não encontrado.                                              | Aprovado |
+| T05 | GET /clientes/abc    | ID inválido                   | HTTP 400                      | HTTP 400; mensagem indicando que o ID deve ser inteiro positivo.                        | Aprovado |
+| T06 | POST /clientes       | Dados válidos                 | HTTP 201 e cliente criado     | HTTP 201; cliente criado com ID 4 e dados retornados em JSON.                           | Aprovado |
+| T07 | POST /clientes       | Nome ou e-mail vazio          | HTTP 400                      | HTTP 400; campos obrigatórios rejeitados                                                | Aprovado |
+| T08 | POST /clientes       | E-mail inválido               | HTTP 400                      | HTTP 400; formato de e-mail rejeitado                                                   | Aprovado |
+| T09 | PUT /clientes/:id    | Atualizar cliente existente   | HTTP 200 e cliente atualizado | HTTP 200; cliente de teste atualizado com os novos dados.                               | Aprovado |
+| T10 | PUT /clientes/99     | Atualizar cliente inexistente | HTTP 404                      | HTTP 404; cliente inexistente não foi encontrado.                                       | Aprovado |
+| T11 | DELETE /clientes/:id | Excluir cliente existente     | HTTP 200 e confirmação        | HTTP 200; exclusão confirmada e objeto removido retornado.                              | Aprovado |
+| T12 | GET /clientes/:id    | Consultar cliente excluído    | HTTP 404                      | HTTP 404; após excluir o cliente de ID 5, a consulta retornou "Cliente não encontrado." | Aprovado |
+| T13 | DELETE /clientes/abc | Excluir com ID inválido       | HTTP 400                      | HTTP 400; identificador inválido rejeitado.                                             | Aprovado |
 
 ## 5. Ocorrências identificadas durante o desenvolvimento
 
