@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+const path = require("path");
 const clientesRoutes = require("./routes/clientes.routes");
 
 const app = express();
@@ -17,6 +18,10 @@ app.get("/health", function (req, res) {
         message: "API de clientes funcionando",
     });
 });
+
+const frontendPath = path.join(__dirname, "../../frontend");
+
+app.use(express.static(frontendPath));
 
 app.listen(PORT, function () {
     console.log(`Servidor iniciado em http://localhost:${PORT}`);
