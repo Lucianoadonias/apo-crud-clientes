@@ -8,6 +8,9 @@ const clientsList = document.querySelector("#clients-list");
 const emptyState = document.querySelector("#empty-state");
 const listFeedback = document.querySelector("#list-feedback");
 const formFeedback = document.querySelector("#form-feedback");
+const clientNameInput = document.querySelector("#client-name");
+const clientEmailInput = document.querySelector("#client-email");
+const clientPhoneInput = document.querySelector("#client-phone");
 
 let clients = [];
 
@@ -77,11 +80,62 @@ async function carregarClientes() {
     }
 }
 
-clientForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+clientForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  formFeedback.textContent = "";
+
+  const name = clientNameInput.value.trim();
+  const email = clientEmailInput.value.trim();
+  const phone = clientPhoneInput.value.trim();
+
+  if (!name || !email) {
+    formFeedback.textContent =
+      "Preencha o nome e o email do cliente.";
+    return;
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailPattern.test(email)) {
+    formFeedback.textContent = "Informe um e-mail válido.";
+    return;
+  }
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone
+      })
+    });
+
+    const dados = await response.json();
+
+    if (!response.ok) {
+      formFeedback.textContent =
+        dados.error || "Não foi possível cadastrar o cliente.";
+      return;
+    }
+
+    clientForm.reset();
+    await carregarClientes();
 
     formFeedback.textContent =
-        "O cadastro pela API será integrado na próxima tarefa.";
+      `Cliente "${dados.name}" cadastrado com sucesso.`;
+
+  } catch (error) {
+
+    console.error("Erro ao cadastrar cliente:", error);
+
+    formFeedback.textContent =
+      "Não foi possível concluir o cadastro. Verifique a conexão com o servidor e tente novamente.";
+  }
 });
 
 clientForm.addEventListener("reset", function () {
