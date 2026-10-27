@@ -11,8 +11,10 @@ const formFeedback = document.querySelector("#form-feedback");
 const clientNameInput = document.querySelector("#client-name");
 const clientEmailInput = document.querySelector("#client-email");
 const clientPhoneInput = document.querySelector("#client-phone");
+const submitButton = clientForm.querySelector('button[type="submit"]');
 
 let clients = [];
+let editingClientId = null;
 
 function renderClients() {
     clientsList.replaceChildren();
@@ -32,7 +34,18 @@ function renderClients() {
         phoneCell.textContent = client.phone || "Não informado";
 
         const actionsCell = document.createElement("td");
-        actionsCell.textContent = "—";
+
+        const editButton = document.createElement("button");
+
+        editButton.type = "button";
+        editButton.textContent = "Editar";
+        editButton.className = "edit-button";
+
+        editButton.addEventListener("click", function () {
+        iniciarEdicao(client);
+        });
+
+        actionsCell.appendChild(editButton);
 
         row.append(
             nameCell,
@@ -47,6 +60,26 @@ function renderClients() {
     listFeedback.textContent = clients.length > 0
         ? `Total de clientes: ${clients.length}`
         : "";
+}
+
+function iniciarEdicao(client) {
+  editingClientId = client.id;
+
+  clientNameInput.value = client.name;
+  clientEmailInput.value = client.email;
+  clientPhoneInput.value = client.phone || "";
+
+  submitButton.textContent = "Salvar alterações";
+
+  formFeedback.textContent =
+    `Editando cliente: ${client.name}`;
+}
+
+function encerrarEdicao() {
+  editingClientId = null;
+  clientForm.reset();
+
+  submitButton.textContent = "Cadastrar";
 }
 
 async function carregarClientes() {
@@ -103,10 +136,18 @@ clientForm.addEventListener("submit", async function (event) {
   }
 
   try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
+    const isEditing = editingClientId !== null;
+
+    const url = isEditing
+        ? `${API_URL}/${editingClientId}`
+        : API_URL;
+
+    const method = isEditing ? "PUT" : "POST";
+
+    const response = await fetch(url, {
+        method: method,
+         headers: {
+    "Content-Type": "application/json"
       },
       body: JSON.stringify({
         name: name,
@@ -123,11 +164,15 @@ clientForm.addEventListener("submit", async function (event) {
       return;
     }
 
-    clientForm.reset();
+    const successMessage = isEditing
+        ? `Cliente "${dados.name}" atualizado com sucesso.`
+        : `Cliente "${dados.name}" cadastrado com sucesso.`;
+
+    encerrarEdicao();
+
     await carregarClientes();
 
-    formFeedback.textContent =
-      `Cliente "${dados.name}" cadastrado com sucesso.`;
+    formFeedback.textContent = successMessage;
 
   } catch (error) {
 
@@ -139,7 +184,9 @@ clientForm.addEventListener("submit", async function (event) {
 });
 
 clientForm.addEventListener("reset", function () {
-    formFeedback.textContent = "";
+  editingClientId = null;
+  submitButton.textContent = "Cadastrar";
+  formFeedback.textContent = "";
 });
 
 carregarClientes();
