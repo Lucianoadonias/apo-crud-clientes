@@ -1,4 +1,3 @@
-
 "use strict";
 
 const API_URL = "/clientes";
@@ -42,44 +41,56 @@ function renderClients() {
         editButton.className = "edit-button";
 
         editButton.addEventListener("click", function () {
-        iniciarEdicao(client);
+            iniciarEdicao(client);
+        });
+
+        const deleteButton = document.createElement("button");
+
+        deleteButton.type = "button";
+        deleteButton.textContent = "Excluir";
+        deleteButton.className = "delete-button";
+
+        deleteButton.addEventListener("click", function () {
+            const confirmed = window.confirm(
+                `Deseja realmente excluir o cliente "${client.name}"?`,
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            excluirCliente(client);
         });
 
         actionsCell.appendChild(editButton);
 
-        row.append(
-            nameCell,
-            emailCell,
-            phoneCell,
-            actionsCell
-        );
+        row.append(nameCell, emailCell, phoneCell, actionsCell);
 
         clientsList.appendChild(row);
+        actionsCell.appendChild(deleteButton);
     });
 
-    listFeedback.textContent = clients.length > 0
-        ? `Total de clientes: ${clients.length}`
-        : "";
+    listFeedback.textContent =
+        clients.length > 0 ? `Total de clientes: ${clients.length}` : "";
 }
 
 function iniciarEdicao(client) {
-  editingClientId = client.id;
+    editingClientId = client.id;
 
-  clientNameInput.value = client.name;
-  clientEmailInput.value = client.email;
-  clientPhoneInput.value = client.phone || "";
+    clientNameInput.value = client.name;
+    clientEmailInput.value = client.email;
+    clientPhoneInput.value = client.phone || "";
 
-  submitButton.textContent = "Salvar alterações";
+    submitButton.textContent = "Salvar alterações";
 
-  formFeedback.textContent =
-    `Editando cliente: ${client.name}`;
+    formFeedback.textContent = `Editando cliente: ${client.name}`;
 }
 
 function encerrarEdicao() {
-  editingClientId = null;
-  clientForm.reset();
+    editingClientId = null;
+    clientForm.reset();
 
-  submitButton.textContent = "Cadastrar";
+    submitButton.textContent = "Cadastrar";
 }
 
 async function carregarClientes() {
@@ -100,9 +111,7 @@ async function carregarClientes() {
 
         clients = dados;
         renderClients();
-
     } catch (error) {
-
         clientsList.replaceChildren();
         emptyState.hidden = true;
 
@@ -114,79 +123,99 @@ async function carregarClientes() {
 }
 
 clientForm.addEventListener("submit", async function (event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  formFeedback.textContent = "";
+    formFeedback.textContent = "";
 
-  const name = clientNameInput.value.trim();
-  const email = clientEmailInput.value.trim();
-  const phone = clientPhoneInput.value.trim();
+    const name = clientNameInput.value.trim();
+    const email = clientEmailInput.value.trim();
+    const phone = clientPhoneInput.value.trim();
 
-  if (!name || !email) {
-    formFeedback.textContent =
-      "Preencha o nome e o email do cliente.";
-    return;
-  }
-
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!emailPattern.test(email)) {
-    formFeedback.textContent = "Informe um e-mail válido.";
-    return;
-  }
-
-  try {
-    const isEditing = editingClientId !== null;
-
-    const url = isEditing
-        ? `${API_URL}/${editingClientId}`
-        : API_URL;
-
-    const method = isEditing ? "PUT" : "POST";
-
-    const response = await fetch(url, {
-        method: method,
-         headers: {
-    "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        phone: phone
-      })
-    });
-
-    const dados = await response.json();
-
-    if (!response.ok) {
-      formFeedback.textContent =
-        dados.error || "Não foi possível cadastrar o cliente.";
-      return;
+    if (!name || !email) {
+        formFeedback.textContent = "Preencha o nome e o email do cliente.";
+        return;
     }
 
-    const successMessage = isEditing
-        ? `Cliente "${dados.name}" atualizado com sucesso.`
-        : `Cliente "${dados.name}" cadastrado com sucesso.`;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    encerrarEdicao();
+    if (!emailPattern.test(email)) {
+        formFeedback.textContent = "Informe um e-mail válido.";
+        return;
+    }
 
-    await carregarClientes();
+    try {
+        const isEditing = editingClientId !== null;
 
-    formFeedback.textContent = successMessage;
+        const url = isEditing ? `${API_URL}/${editingClientId}` : API_URL;
 
-  } catch (error) {
+        const method = isEditing ? "PUT" : "POST";
 
-    console.error("Erro ao cadastrar cliente:", error);
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                phone: phone,
+            }),
+        });
 
-    formFeedback.textContent =
-      "Não foi possível concluir o cadastro. Verifique a conexão com o servidor e tente novamente.";
-  }
+        const dados = await response.json();
+
+        if (!response.ok) {
+            formFeedback.textContent =
+                dados.error || "Não foi possível cadastrar o cliente.";
+            return;
+        }
+
+        const successMessage = isEditing
+            ? `Cliente "${dados.name}" atualizado com sucesso.`
+            : `Cliente "${dados.name}" cadastrado com sucesso.`;
+
+        encerrarEdicao();
+
+        await carregarClientes();
+
+        formFeedback.textContent = successMessage;
+    } catch (error) {
+        console.error("Erro ao cadastrar cliente:", error);
+
+        formFeedback.textContent =
+            "Não foi possível concluir o cadastro. Verifique a conexão com o servidor e tente novamente.";
+    }
 });
 
 clientForm.addEventListener("reset", function () {
-  editingClientId = null;
-  submitButton.textContent = "Cadastrar";
-  formFeedback.textContent = "";
+    editingClientId = null;
+    submitButton.textContent = "Cadastrar";
+    formFeedback.textContent = "";
 });
 
 carregarClientes();
+
+async function excluirCliente(client) {
+    try {
+        const response = await fetch(`${API_URL}/${client.id}`, {
+            method: "DELETE",
+        });
+
+        const dados = await response.json();
+
+        if (!response.ok) {
+            listFeedback.textContent =
+                dados.error || "Não foi possível excluir o cliente.";
+            return;
+        }
+
+        await carregarClientes();
+
+        listFeedback.textContent = `Cliente "${client.name}" excluído com sucesso.`;
+    } catch (error) {
+        console.error("Erro ao excluir cliente:", error);
+
+        listFeedback.textContent =
+            "Não foi possível concluir a exclusão. Verifique a conexão com o servidor.";
+    }
+}
